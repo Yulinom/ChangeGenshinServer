@@ -15,27 +15,28 @@
     - Java编写.bat或.cmd等后缀的批处理命令文件，命令像平时的命令行一样即可，即cd进入文件夹等
     - Java执行这些文件的关键语句如下
     - ```java 
-    /**
-    *@Param locationCmd .cmd或.bat的文件路径
-    */
-      public static void  callCmd(String locationCmd){
-          try {
-          Process child = Runtime.getRuntime().exec(locationCmd);//获取jvm并创建命令行子进程
-          InputStream in = child.getInputStream();
-          int c;
-          while ((c = in.read()) != -1) {
-              System.out.println((char)c);
-      }
-       in.close();
-       try {
-           child.waitFor();
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
-       System.out.println("done");
-     } catch (IOException e) {
-           e.printStackTrace();
-     }
+    /**  
+    *@Param locationCmd .cmd或.bat的文件路径  
+    */  
+      public static void  callCmd(String locationCmd){  
+          try {  
+          Process child = Runtime.getRuntime().exec(locationCmd);//获取jvm并创建命令行子进程  
+          InputStream in = child.getInputStream();  
+          int c;  
+          while ((c = in.read()) != -1) {  
+              System.out.println((char)c);  
+      }  
+       in.close();  
+       try {  
+           child.waitFor();  
+       } catch (InterruptedException e) {  
+           e.printStackTrace();  
+       }  
+       System.out.println("done");  
+     } catch (IOException e) {  
+           e.printStackTrace();  
+     }  
+    ```
 2. 读取配置文件
   - 读取resources文件夹下的配置文件常用的根据InputStream输入流读取问题：我的原想法是properties.load(InputStream)后，再次利用输入流获取一个StringBuilder
   - 问题就出在这里，获取的StringBuilder内容为空，因为InputStream在load进properties对象后，就不能再次从头读了，正常的Stream流类指针是不可重置的
